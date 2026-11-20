@@ -1,0 +1,4 @@
+../Src/uart.c:60:6:USART2_Init	4	static
+../Src/uart.c:102:6:USART2_WriteChar	16	static
+../Src/uart.c:114:6:USART2_WriteString	16	static
+../Src/uart.c:129:9:USART2_ReadChar	4	static
