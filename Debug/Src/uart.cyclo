@@ -1,4 +1,0 @@
-../Src/uart.c:60:6:USART2_Init	1
-../Src/uart.c:102:6:USART2_WriteChar	2
-../Src/uart.c:114:6:USART2_WriteString	3
-../Src/uart.c:129:9:USART2_ReadChar	2
