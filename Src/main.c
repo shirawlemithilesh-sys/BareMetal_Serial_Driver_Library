@@ -4,6 +4,7 @@
 #include "gpio.h"
 #include "uart.h"
 #include "spi.h"
+#include "i2c.h"
 
 /* Cortex-M4F FPU initialization */
 
@@ -54,6 +55,7 @@ int main(void)
 
     USART2_Init();
     SPI1_Init();
+    I2C1_Init();
 
     spi_received = SPI1_Transfer(0xA5);
 
@@ -68,6 +70,23 @@ int main(void)
     USART2_WriteString("SPI1 Loopback RX (decimal): ");
     USART2_WriteUInt32(spi_received);
     USART2_WriteString("\r\n");
+    USART2_WriteString("Starting I2C scan...\r\n");
+
+    for (uint8_t addr = 0x20; addr <= 0x27; addr++)
+    {
+        USART2_WriteString("Checking address: ");
+        USART2_WriteUInt32(addr);
+        USART2_WriteString("\r\n");
+
+        if (I2C1_WriteByte(addr, 0x00))
+        {
+            USART2_WriteString("DEVICE FOUND!\r\n");
+        }
+        else
+        {
+            USART2_WriteString("No response\r\n");
+        }
+    }
     while (1)
     {
         if (USART2_ReadChar(&received))
