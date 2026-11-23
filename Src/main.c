@@ -3,6 +3,7 @@
 
 #include "gpio.h"
 #include "uart.h"
+#include "spi.h"
 
 /* Cortex-M4F FPU initialization */
 
@@ -45,12 +46,16 @@ static void USART2_WriteUInt32(uint32_t value)
 int main(void)
 {
     uint8_t received;
+    uint8_t spi_received;
 
     FPU_Init();
 
     GPIO_Init();
 
     USART2_Init();
+    SPI1_Init();
+
+    spi_received = SPI1_Transfer(0xA5);
 
     USART2_WriteString("\r\n");
     USART2_WriteString("================================\r\n");
@@ -59,6 +64,10 @@ int main(void)
     USART2_WriteString("================================\r\n");
     USART2_WriteString("Type something below:\r\n");
 
+
+    USART2_WriteString("SPI1 Loopback RX (decimal): ");
+    USART2_WriteUInt32(spi_received);
+    USART2_WriteString("\r\n");
     while (1)
     {
         if (USART2_ReadChar(&received))
